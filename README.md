@@ -2,9 +2,13 @@
 
 A simple and efficient Arduino Nano–based spider robot that uses only 2 BO motors to control 8 legs through mechanical linkage. The robot receives directional commands wirelessly via an HC-05 Bluetooth module and is powered by three 18650 batteries. Designed for educational, experimental, or entertainment purposes, the robot offers a low-cost, customizable platform.
 
-## 🧩 3D View of Spider Bot
+## 📸 Product Image
 
 ![Four-Legged-Bluetooth--Controlled-Spider-Robot](Images/Product_Image.jpg)
+
+## 🧩 3D View 
+
+![Four-Legged-Bluetooth--Controlled-Spider-Robot](Images/3D_Image.jpg)
 
 ## 🎥 Working Demo Video
 

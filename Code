@@ -1,0 +1,109 @@
+char x;
+
+void setup() 
+{
+  //start serial connection
+  Serial.begin(9600);
+  //configure pin 2 as an input and enable the internal pull-up resistor
+
+  /*Enable receiver and transmitter */
+  UCSR0B = (1<<RXEN0)|(1<<TXEN0);
+  /* Set frame format: 8data, 2stop bit */
+  UCSR0C = (1<<USBS0)|(3<<UCSZ00);
+
+  
+  pinMode(2,OUTPUT);
+  pinMode(3,OUTPUT);
+  pinMode(4,OUTPUT);
+  pinMode(5,OUTPUT);
+
+  digitalWrite(2,LOW);
+  digitalWrite(3,LOW);
+  digitalWrite(4,LOW);
+  digitalWrite(5,LOW);
+
+  delay(1000);
+}
+
+void loop() 
+{
+
+delay(100);  
+
+ x=USART_Receive();
+ USART_Transmit(x);
+ delay(100);
+
+if((x=='f')||(x=='F'))
+{
+  Serial.print("\nForward");
+  digitalWrite(2,LOW);
+  digitalWrite(3,HIGH);
+  digitalWrite(4,LOW);
+  digitalWrite(5,HIGH);
+ }
+
+else if((x=='b')||(x=='B'))
+{
+  Serial.print("\nBackward");
+  digitalWrite(2,HIGH);
+  digitalWrite(3,LOW);
+  digitalWrite(4,HIGH);
+  digitalWrite(5,LOW);  
+}
+
+else if((x=='r')||(x=='R'))
+{
+  Serial.print("\nRight");
+  digitalWrite(2,LOW);
+  digitalWrite(3,HIGH);
+  digitalWrite(4,HIGH);
+  digitalWrite(5,LOW); 
+  /*delay(200);
+  digitalWrite(2,LOW);
+  digitalWrite(3,LOW);
+  digitalWrite(4,LOW);
+  digitalWrite(5,LOW); */
+}
+
+else if((x=='l')||(x=='L'))
+{
+  Serial.print("\nLeft");
+  digitalWrite(2,HIGH);
+  digitalWrite(3,LOW);
+  digitalWrite(4,LOW);
+  digitalWrite(5,HIGH);  
+  /*delay(200);
+  digitalWrite(2,LOW);
+  digitalWrite(3,LOW);
+  digitalWrite(4,LOW);
+  digitalWrite(5,LOW);*/
+}
+
+else if((x=='s')||(x=='S'))
+{
+  Serial.print("\nStop");
+  digitalWrite(2,LOW);
+  digitalWrite(3,LOW);
+  digitalWrite(4,LOW);
+  digitalWrite(5,LOW);  
+}
+
+
+}
+
+void USART_Transmit( unsigned char data )
+{
+/* Wait for empty transmit buffer */
+while ( !( UCSR0A & (1<<UDRE0)) );
+/* Put data into buffer, sends the data */
+UDR0 = data;
+}
+
+unsigned char USART_Receive( void )
+{
+/* Wait for data to be received */
+while ( !(UCSR0A & (1<<RXC0)) );
+/* Get and return received data from buffer */
+return UDR0;
+}
